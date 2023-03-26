@@ -10,6 +10,7 @@ class ProdukModel extends Model
     use HasFactory;
     //get data from table
     //get data from table
+    //get data from table
     protected $table = 'produk';
     protected $primaryKey = 'id_produk';
 }
