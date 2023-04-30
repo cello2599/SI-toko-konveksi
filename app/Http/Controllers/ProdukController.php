@@ -5,28 +5,65 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProdukModel;
+use App\Http\Resources\ProdukResource;
 
 class ProdukController extends Controller
 {
     //how to get data from database
     public function index()
     {
-        $data = ['produk'] => ProdukModel::all();
-        return view('produk.index', $data);
+        $produk = ProdukModel::all();
+        $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
+            ->join('jenis', 'produk.id_jenis', '=', 'jenis.id_jenis')
+            ->select('produk.*', 'kategori.kategori_produk', 'jenis.jenis_produk')
+            ->get();
+        //return data to json and 
+        //return response()->json($data);
+        //return data from resources
+        return ProdukResource::collection($produk);
     }
 
     //how to insert data to database
-    public function insert(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_produk' => 'required',
             'harga' => 'required',
-            'stok' => 'required',
+            'ukuran' => 'required',
             'id_kategori' => 'required',
             'id_jenis' => 'required',
         ]);
 
-        \App\Models\ProdukModel::create($request->all());
-        return redirect('produk')->with('status', 'Data Berhasil Ditambahkan!');
+        $produk = ProdukModel::create($validated);
+        $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
+            ->join('jenis', 'produk.id_jenis', '=', 'jenis.id_jenis')
+            ->select('produk.*', 'kategori.kategori_produk', 'jenis.jenis_produk')
+            ->where('produk.id_produk', '=', $produk->id_produk)
+            ->first();
+        return new ProdukResource($produk);
+    }
+
+    //how to update data to database
+    public function update(Request $request, $id){
+
+        $validated = $request->validate([
+            'nama_produk' => 'required',
+            'harga' => 'required',
+            'ukuran' => 'required',
+        ]);
+
+        $produk = ProdukModel::findOrFail($request->id);
+        $produk->update($validated);
+
+        return new ProdukResource($produk);
+    }
+
+    //how to delete data from database
+    public function destroy($id)
+    {
+        $produk = ProdukModel::findOrFail($id);
+        $produk->delete();
+
+        return new ProdukResource($produk);
     }
 }

@@ -9,6 +9,6 @@ class JenisModel extends Model
 {
     use HasFactory;
     //get data from table
-    protected $table = 'jenis';
+    protected $table = 'jenis'; 
     protected $primaryKey = 'id_jenis';
 }

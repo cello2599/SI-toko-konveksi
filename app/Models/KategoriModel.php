@@ -10,5 +10,5 @@ class KategoriModel extends Model
     use HasFactory;
     //get data from table
     protected $table = 'kategori';
-    protected $primaryKey = 'id_kategori';
+    protected $primaryKey = 'id_kategori'; 
 }
