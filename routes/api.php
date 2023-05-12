@@ -25,6 +25,8 @@ Route::middleware(['auth:sanctum'])->group( function(){
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
-Route::get('/jenis', [App\Http\Controllers\JenisController::class, 'index']);
+Route::get('/produk/client', [App\Http\Controllers\ProdukController::class, 'show']);
+
+Route::get('/ukuran', [App\Http\Controllers\UkuranController::class, 'index']);
 Route::get('/kategori', [App\Http\Controllers\KategoriController::class, 'index']);
 

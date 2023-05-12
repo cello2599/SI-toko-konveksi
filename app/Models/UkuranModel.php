@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JenisModel extends Model
+class UkuranModel extends Model
 {
     use HasFactory;
     //get data from table
-    protected $table = 'jenis'; 
-    protected $primaryKey = 'id_jenis';
+    protected $table = 'ukuran'; 
+    protected $primaryKey = 'id_ukuran';
 }

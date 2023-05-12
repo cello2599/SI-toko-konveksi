@@ -14,8 +14,8 @@ class ProdukController extends Controller
     {
         $produk = ProdukModel::all();
         $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
-            ->join('jenis', 'produk.id_jenis', '=', 'jenis.id_jenis')
-            ->select('produk.*', 'kategori.kategori_produk', 'jenis.jenis_produk')
+            ->join('ukuran', 'produk.id_ukuran', '=', 'ukuran.id_ukuran')
+            ->select('produk.*', 'kategori.kategori_produk', 'ukuran.ukuran')
             ->get();
         //return data to json and 
         //return response()->json($data);
@@ -29,15 +29,14 @@ class ProdukController extends Controller
         $validated = $request->validate([
             'nama_produk' => 'required',
             'harga' => 'required',
-            'ukuran' => 'required',
+            'id_ukuran' => 'required',
             'id_kategori' => 'required',
-            'id_jenis' => 'required',
         ]);
 
         $produk = ProdukModel::create($validated);
         $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
-            ->join('jenis', 'produk.id_jenis', '=', 'jenis.id_jenis')
-            ->select('produk.*', 'kategori.kategori_produk', 'jenis.jenis_produk')
+            ->join('ukuran', 'produk.id_ukuran', '=', 'ukuran.id_ukuran')
+            ->select('produk.*', 'kategori.kategori_produk', 'ukuran.ukuran')
             ->where('produk.id_produk', '=', $produk->id_produk)
             ->first();
         return new ProdukResource($produk);
@@ -49,7 +48,6 @@ class ProdukController extends Controller
         $validated = $request->validate([
             'nama_produk' => 'required',
             'harga' => 'required',
-            'ukuran' => 'required',
         ]);
 
         $produk = ProdukModel::findOrFail($request->id);

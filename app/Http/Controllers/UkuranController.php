@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\JenisModel;
+use App\Models\UkuranModel;
 
-class JenisController extends Controller
+class UkuranController extends Controller
 {   
     //get data from jenis model
     function index()
     {
-        $data = JenisModel::all();
+        $data = UkuranModel::all();
         //return data to json
         return response()->json($data);
     }
