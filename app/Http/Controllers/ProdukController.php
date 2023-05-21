@@ -55,7 +55,7 @@ class ProdukController extends Controller
         return new ProdukResource($produk);
     }
 
-    //update data ke database
+    //update data nama,harga dan file gambar
     public function update(Request $request, $id){
 
         $validated = $request->validate([
