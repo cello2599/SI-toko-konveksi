@@ -70,5 +70,9 @@ class AuthController extends Controller
     {
         //removing token
         $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
 }
