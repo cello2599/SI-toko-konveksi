@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     function login(Request $request)
     {
-        //validasi
+        
         $request->validate([
             'name' => 'required',
             'password' => 'required'
@@ -38,7 +38,6 @@ class AuthController extends Controller
 
     function logout(Request $request)
     {
-        //removing token
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
