@@ -85,7 +85,7 @@ class ProdukController extends Controller
         return new ProdukResource($produk);
     }
 
-    //fungsi hapus data
+    //delete data dari database
     public function destroy($id)
     {
         $produk = ProdukModel::findOrFail($id);
