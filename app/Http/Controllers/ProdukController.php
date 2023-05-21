@@ -55,7 +55,7 @@ class ProdukController extends Controller
         return new ProdukResource($produk);
     }
 
-    //update data to database
+    //update data nama,harga dan file gambar
     public function update(Request $request, $id){
 
         $validated = $request->validate([
@@ -85,7 +85,7 @@ class ProdukController extends Controller
         return new ProdukResource($produk);
     }
 
-    //hapus data dari database
+    //delete data dari database
     public function destroy($id)
     {
         $produk = ProdukModel::findOrFail($id);
