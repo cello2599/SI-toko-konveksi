@@ -24,7 +24,7 @@ class ProdukController extends Controller
         return ProdukResource::collection($produk);
     }
 
-    //menambah data ke database
+    //insert data database
     public function store(Request $request)
     {   
     
