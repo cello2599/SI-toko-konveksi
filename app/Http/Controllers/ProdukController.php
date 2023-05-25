@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProdukModel;
 use App\Http\Resources\ProdukResource;
+use App\Http\Resources\DetailProdukResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
@@ -24,7 +25,15 @@ class ProdukController extends Controller
         return ProdukResource::collection($produk);
     }
 
-    //insert data database
+    //how to get data by id from database
+    public function detail($id)
+    {
+        $produk = ProdukModel::findOrFail($id);
+        
+        return new DetailProdukResource($produk);
+    }
+
+    //how to insert data to database
     public function store(Request $request)
     {   
     
@@ -61,6 +70,8 @@ class ProdukController extends Controller
         $validated = $request->validate([
             'nama_produk' => 'required',
             'harga' => 'required',
+            'id_ukuran' => 'required',
+            'id_kategori' => 'required',
         ]);
 
         if($request->file){
@@ -75,7 +86,7 @@ class ProdukController extends Controller
 
         $request['gambar']= $filename;
         $produk = ProdukModel::findOrFail($request->id);
-        $produk = ProdukModel::update($request->all());
+        $produk->update($request->all());
         $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
             ->join('ukuran', 'produk.id_ukuran', '=', 'ukuran.id_ukuran')
             ->select('produk.*', 'kategori.kategori_produk', 'ukuran.ukuran')
