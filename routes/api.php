@@ -26,6 +26,13 @@ Route::middleware(['auth:sanctum'])->group( function(){
     Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'store']);
     Route::post('/produk/update/{id}', [App\Http\Controllers\ProdukController::class, 'update']);
     Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy']);
+
+    //customer route
+    Route::post('/customer', [App\Http\Controllers\CustomerController::class, 'store']);
+    Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index']);
+    Route::get('/customer/{id}', [App\Http\Controllers\CustomerController::class, 'detail']);
+    Route::post('/customer/update/{id}', [App\Http\Controllers\CustomerController::class, 'update']);
+    Route::delete('/customer/{id}', [App\Http\Controllers\CustomerController::class, 'destroy']);
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
