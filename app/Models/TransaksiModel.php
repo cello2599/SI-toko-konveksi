@@ -11,4 +11,10 @@ class TransaksiModel extends Model
     //get data from table
     protected $table = 'transaksi';
     protected $primaryKey = 'id_transaksi';
+
+    protected $fillable = [
+        'id_customer',
+        'jumlah_transaksi',
+        'tanggal_transaksi',
+    ];
 }
