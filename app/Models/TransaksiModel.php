@@ -15,6 +15,14 @@ class TransaksiModel extends Model
     protected $fillable = [
         'id_customer',
         'id',
-        'tanggal_transaksi',
     ];
+
+    //make relation many to many with table produk
+    public function produk()
+    {
+        return $this->belongsToMany(ProdukModel::class, 'detail_transaksi', 'id_transaksi', 'id_produk');
+    }   
+
+
+
 }
