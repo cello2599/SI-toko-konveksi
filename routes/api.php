@@ -44,4 +44,5 @@ Route::get('/produk/client', [App\Http\Controllers\ProdukController::class, 'sho
 
 Route::get('/ukuran', [App\Http\Controllers\UkuranController::class, 'index']);
 Route::get('/kategori', [App\Http\Controllers\KategoriController::class, 'index']);
+Route::get('/dropdown-produk', [App\Http\Controllers\ProdukController::class, 'dropdown']);
 

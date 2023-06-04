@@ -18,9 +18,12 @@ class TransaksiModel extends Model
         'id',
     ];
 
-    //relation many to many with table produk
+    //make relation many to many with table produk
     public function produk()
     {
         return $this->belongsToMany(ProdukModel::class, 'detail_transaksi', 'id_transaksi', 'id_produk');
-    }
+    }   
+
+
+
 }
