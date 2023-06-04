@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class TransaksiModel extends Model
 {
     use HasFactory;
@@ -14,7 +15,12 @@ class TransaksiModel extends Model
 
     protected $fillable = [
         'id_customer',
-        'jumlah_transaksi',
-        'tanggal_transaksi',
+        'id',
     ];
+
+    //relation many to many with table produk
+    public function produk()
+    {
+        return $this->belongsToMany(ProdukModel::class, 'detail_transaksi', 'id_transaksi', 'id_produk');
+    }
 }
