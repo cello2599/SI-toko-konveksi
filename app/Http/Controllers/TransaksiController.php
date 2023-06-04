@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransaksiModel;
 use App\Http\Resources\TransaksiResource;
-use App\Models\ProdukModel;
+// use App\Models\ProdukModel;
 
 
 class TransaksiController extends Controller
@@ -14,39 +14,25 @@ class TransaksiController extends Controller
     //create data transaksi
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'id_customer' => 'required',
-        //     'id' => 'required',
-        // ]);
-
-        // $transaksi = TransaksiModel::create($request->all());
-        // return response()->json([
-        //     'message' => 'Success',
-        //     'data' => $transaksi
-        // ]);
-
-        $transaksi = TransaksiModel::create([
-            'id_customer' => $request->id_customer,
-            'id' => $request->id,
+        $validated = $request->validate([
+            'id_customer' => 'required',
         ]);
 
-        // $produk = $request->input('nama_produk');
-        // //get harga produk
-        // //$harga = $produk->harga;
+        $request['id'] = auth()->user()->id;
 
+        $transaksi = TransaksiModel::create($request->all());
+        $transaksi = TransaksiModel::join('users', 'transaksi.id', '=', 'users.id')
+            ->join('customer', 'transaksi.id_customer', '=', 'customer.id_customer')
+            ->select('transaksi.*', 'users.name', 'customer.nama' , 'customer.alamat', 'customer.no_telp')
+            //get id transaksi
+            ->where('id_transaksi', $transaksi->id_transaksi)
+            ->first();
 
         // foreach($produk as $key => $value){
         //     $transaksi->produk()->attach($value, [
         //         'jumlah' => $request->input('jumlah')[$key],
         //     ]);
         // }
-
-        return response()->json([
-            'message' => 'Success'
-        ]);
-        //get harga produk
-        // $harga = $produk->harga;
-        //get jumlah from detail transaksi
-        // $jumlah = $request->jumlah;
+        return new TransaksiResource($transaksi);
     }
 }

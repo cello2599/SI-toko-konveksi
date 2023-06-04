@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\TransaksiModel;
 
 class TransaksiResource extends JsonResource
 {
@@ -14,6 +15,12 @@ class TransaksiResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+        'id_transaksi' => $this->id_transaksi,
+        'nama_customer' => $this->nama,
+        'alamat_customer' => $this->alamat,
+        'no_telp' => $this->no_telp,
+        'admin' => $this->name
+        ];
     }
 }
