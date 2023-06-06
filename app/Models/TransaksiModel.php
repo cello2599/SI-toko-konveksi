@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class TransaksiModel extends Model
@@ -18,11 +19,12 @@ class TransaksiModel extends Model
         'id',
     ];
 
-    //make relation many to many with table produk
-    // public function produk()
-    // {
-    //     return $this->belongsToMany(ProdukModel::class, 'detail_transaksi', 'id_transaksi', 'id_produk');
-    // }   
+
+    //make relation to get produk
+    public function produks(): HasMany
+    {
+        return $this->hasMany(DetailTransaksiModel::class, 'id_transaksi', 'id_transaksi');
+    }
 
 
 

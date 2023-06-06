@@ -44,7 +44,7 @@ class ProdukController extends Controller
         //return data to json and 
         //return response()->json($data);
         //return data from resources
-        return DropdownProduk::collection($produk);
+        return DropdownProduk::collection($produk); 
     }
 
     //how to insert data to database

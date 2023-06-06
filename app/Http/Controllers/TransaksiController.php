@@ -35,4 +35,27 @@ class TransaksiController extends Controller
         // }
         return new TransaksiResource($transaksi);
     }
+
+    //get all data transaksi
+    public function index()
+    {
+        $transaksi = TransaksiModel::join('users', 'transaksi.id', '=', 'users.id')
+            ->join('customer', 'transaksi.id_customer', '=', 'customer.id_customer')
+            ->select('transaksi.*', 'users.name', 'customer.nama' , 'customer.alamat', 'customer.no_telp')
+            ->get();
+
+        // $transaksi = TransaksiModel::all();
+        return TransaksiResource::collection($transaksi->loadMissing(['produks']));
+    }
+
+    //get data transaksi by id
+    public function detail($id_transaksi){
+        $transaksi = TransaksiModel::join('users', 'transaksi.id', '=', 'users.id')
+            ->join('customer', 'transaksi.id_customer', '=', 'customer.id_customer')
+            ->select('transaksi.*', 'users.name', 'customer.nama' , 'customer.alamat', 'customer.no_telp')
+            ->where('id_transaksi', $id_transaksi)
+            ->first();
+
+        return new TransaksiResource($transaksi->loadMissing(['produks']));
+    }
 }

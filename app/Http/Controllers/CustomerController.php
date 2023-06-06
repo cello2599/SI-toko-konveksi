@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\CustomerModel;
 use App\Http\Resources\CustomerResource;
+use App\Http\Resources\DropdownCustomer;
 
 
 class CustomerController extends Controller
@@ -60,4 +61,13 @@ class CustomerController extends Controller
         $customer->delete();
         return new CustomerResource($customer);
     }
+
+    public function dropdown(){
+
+        $customer = CustomerModel::all();
+
+        return DropdownCustomer::collection($customer);
+    }
+
+
 }

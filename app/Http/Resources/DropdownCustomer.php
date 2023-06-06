@@ -4,9 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\ProdukModel;
+use App\Models\CustomerModel;
 
-class DropdownProduk extends JsonResource
+class DropdownCustomer extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,9 @@ class DropdownProduk extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id_produk' => $this->id_produk,
-            'nama_produk' => $this->nama_produk,
-            'harga' => $this->harga,
-            'ukuran' => $this->ukuran,
-            'kategori_produk' => $this->kategori_produk,
+            'id_customer' => $this->id_customer,
+            'nama' => $this->nama,
+            'no_telp' => $this->no_telp,
             ];
     }
 }
