@@ -8,6 +8,7 @@ use App\Models\ProdukModel;
 use App\Http\Resources\ProdukResource;
 use App\Http\Resources\DetailProdukResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\DropdownProduk;
 
 class ProdukController extends Controller
 {
@@ -31,6 +32,19 @@ class ProdukController extends Controller
         $produk = ProdukModel::findOrFail($id);
         
         return new DetailProdukResource($produk);
+    }
+
+    public function dropdown()
+    {
+        $produk = ProdukModel::all();
+        $produk = ProdukModel::join('kategori', 'produk.id_kategori', '=', 'kategori.id_kategori')
+            ->join('ukuran', 'produk.id_ukuran', '=', 'ukuran.id_ukuran')
+            ->select('produk.*', 'kategori.kategori_produk', 'ukuran.ukuran')
+            ->get();
+        //return data to json and 
+        //return response()->json($data);
+        //return data from resources
+        return DropdownProduk::collection($produk); 
     }
 
     //how to insert data to database

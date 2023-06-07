@@ -23,5 +23,11 @@ class ProdukModel extends Model
         'id_ukuran',
     ];
 
+    //relation many to many with table transaksi
+    public function transaksi()
+    {
+        return $this->belongsToMany(TransaksiModel::class, 'detail_transaksi', 'id_produk', 'id_transaksi');
+    }
+
     
 }

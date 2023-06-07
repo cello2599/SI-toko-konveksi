@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class TransaksiModel extends Model
 {
@@ -14,7 +16,16 @@ class TransaksiModel extends Model
 
     protected $fillable = [
         'id_customer',
-        'jumlah_transaksi',
-        'tanggal_transaksi',
+        'id',
     ];
+
+
+    //make relation to get produk
+    public function produks(): HasMany
+    {
+        return $this->hasMany(DetailTransaksiModel::class, 'id_transaksi', 'id_transaksi');
+    }
+
+
+
 }
