@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransaksiModel;
 use App\Http\Resources\TransaksiResource;
+use App\Http\Resources\GrafikResource;
 // use App\Models\ProdukModel;
 
 
@@ -48,8 +49,20 @@ class TransaksiController extends Controller
         return TransaksiResource::collection($transaksi->loadMissing(['produks']));
     }
 
+    public function grafik()
+    {
+        $transaksi = TransaksiModel::join('users', 'transaksi.id', '=', 'users.id')
+            ->join('customer', 'transaksi.id_customer', '=', 'customer.id_customer')
+            ->select('transaksi.*', 'users.name', 'customer.nama' , 'customer.alamat', 'customer.no_telp')
+            ->get();
+
+        // $transaksi = TransaksiModel::all();
+        return GrafikResource::collection($transaksi->loadMissing(['produks']));
+    }
+
     //get data transaksi by id
-    public function detail($id_transaksi){
+    public function detail($id_transaksi)
+    {
         $transaksi = TransaksiModel::join('users', 'transaksi.id', '=', 'users.id')
             ->join('customer', 'transaksi.id_customer', '=', 'customer.id_customer')
             ->select('transaksi.*', 'users.name', 'customer.nama' , 'customer.alamat', 'customer.no_telp')
@@ -57,5 +70,21 @@ class TransaksiController extends Controller
             ->first();
 
         return new TransaksiResource($transaksi->loadMissing(['produks']));
+    }
+
+    //delete transaksi by id
+    public function delete($id_transaksi)
+    {
+        $transaksi = TransaksiModel::where('id_transaksi', $id_transaksi)->first();
+        if ($transaksi) {
+            $transaksi->delete();
+            return response()->json([
+                'message' => 'Success',
+                'data' => $transaksi
+            ]);
+        }
+        return response()->json([
+            'message' => 'Transaksi not found'
+        ], 404);
     }
 }

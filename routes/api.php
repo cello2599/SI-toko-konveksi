@@ -20,11 +20,11 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::middleware(['auth:sanctum'])->group( function(){
-
+    
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
     //produk route
     Route::get('/produk', [App\Http\Controllers\ProdukController::class, 'index']);
     Route::get('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'detail']);
-    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
     Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'store']);
     Route::post('/produk/update/{id}', [App\Http\Controllers\ProdukController::class, 'update']);
     Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy']);
@@ -39,7 +39,9 @@ Route::middleware(['auth:sanctum'])->group( function(){
     //transaksi route
     Route::post('/transaksi', [App\Http\Controllers\TransaksiController::class, 'store']);
     Route::get('/transaksi', [App\Http\Controllers\TransaksiController::class, 'index']);
+    Route::get('/transaksi/grafik', [App\Http\Controllers\TransaksiController::class, 'grafik']);
     Route::get('/transaksi/{id_transaksi}', [App\Http\Controllers\TransaksiController::class, 'detail']);
+    Route::delete('/transaksi/{id_transaksi}', [App\Http\Controllers\TransaksiController::class, 'delete']);
 
     //detail transaksi route
     Route::post('/detail-transaksi/{id_transaksi}', [App\Http\Controllers\DetailTransaksiController::class, 'store']);

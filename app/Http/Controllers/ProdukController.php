@@ -86,16 +86,26 @@ class ProdukController extends Controller
             'harga' => 'required',
             'id_ukuran' => 'required',
             'id_kategori' => 'required',
-        ]);
+        ]); 
 
-        if($request->file){
+
+        if($request->file == null){
+            // //delete gambar lama
+            $produk = ProdukModel::findOrFail($id);
+            $filename = $produk->gambar;
+
+        }
+        else{
+            $produk = ProdukModel::findOrFail($id);
+            $filename = $produk->gambar;
+
+            Storage::delete('public/images/'.$filename);
+
             $extension = $request->file->extension();
             $filename = time() . '.' . $extension;
 
             Storage::putfileAs('public/images', $request->file, $filename);
-        }
-        else{
-            $filename = '';
+            
         }
 
         $request['gambar']= $filename;
@@ -114,6 +124,10 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = ProdukModel::findOrFail($id);
+
+        //delete gambar di storage
+        $filename = $produk->gambar;
+        Storage::delete('public/images/'.$filename);
         $produk->delete();
 
         return new ProdukResource($produk);

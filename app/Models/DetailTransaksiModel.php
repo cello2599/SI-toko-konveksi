@@ -13,6 +13,8 @@ class DetailTransaksiModel extends Model
     use HasFactory;
     //get data from table
     protected $table = 'detail_transaksi';
+    //get primary key
+    protected $primaryKey = 'id_detail';
     //get foreign key
     // protected $foreignKey = ['id_transaksi', 'id_produk'];
 
